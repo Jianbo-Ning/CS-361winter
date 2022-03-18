@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search</title>
+  <style>
+    .main {
+      margin: 5rem auto auto;
+      width: 60%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #result {
+      height: 54vh;
+      margin: 2rem auto;
+      object-fit: contain;
+      border-right: 36px;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 0;
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<div class="relative bg-gray-50">
+  <div class="w-full mx-auto">
+    <div class="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10 px-6">
+      <div class="flex justify-start lg:w-0 lg:flex-1">
+        <a href="#">
+          <span class="sr-only">Workflow</span>
+          <img class="h-8 w-auto sm:h-10"
+               src="data:image/png;base64,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"
+               alt="">
+        </a>
+      </div>
+      <div class="-mr-2 -my-2 md:hidden">
+        <button type="button"
+                class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                aria-expanded="false">
+          <span class="sr-only">Open menu</span>
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+               aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+      <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+      </div>
+    </div>
+  </div>
+
+  <div class="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
+    <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
+      <div class="pt-5 pb-6 px-5">
+        <div class="flex items-center justify-between">
+
+        </div>
+      </div>
+      <div class="py-6 px-5 space-y-6">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main mt-48 py-16 bg-sky-50 border-2 rounded-xl flex flex-col justify-between space-y-10">
+  <div class="flex text-5xl font-mono">
+    Welcome to Search Page
+  </div>
+  <div class="text-3xl">❤️</div>
+  <div class="hidden md:flex items-center justify-end md:flex-1 text-center">
+    <a href="/public/search.html" id="save"
+       class=" whitespace-nowrap inline-flex items-center justify-center px-8 py-4 border border-transparent rounded-md shadow-sm text-2xl font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+      Start Search 🔍</a>
+  </div>
+</div>
+<footer
+  class="bg-gray-50 w-full h-16 max-w-container mx-auto border-t py-10 text-center flex items-center justify-center text-sm text-gray-500">
+  <p>© 2022. All rights reserved.</p>
+  <p class="ml-3 border-l border-gray-200 pl-3">
+    <a class="hover:text-teal-600">Privacy Policy</a>
+  </p>
+</footer>
+</body>
+</html>
